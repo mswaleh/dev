@@ -12,6 +12,7 @@
 	<body>
 	    <div class="container">
 	        <button class="btn btn-primary" id="log-btn">login</button>
+			<div id="msgs"></div>
 	    </div>
 		
 	    <script>    
@@ -36,7 +37,12 @@
 	                    contentType: "application/json",
 	                    success: function (data) {
 	                        console.log('data**' + JSON.stringify(data));
-	                    }
+							$("#msgs").html('data**' + JSON.stringify(data));
+	                    },
+						error: function (err) {
+	                        console.log('err**' + JSON.stringify(err));
+							$("#msgs").html('err**' + JSON.stringify(data));
+						}
 	                });
                 
 	                // Assign handlers immediately after making the request, and remember the jqxhr object for this request
