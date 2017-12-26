@@ -1,0 +1,81 @@
+<html>
+
+	<head>
+	    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css"/>    
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+      
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>						
+	</head>
+	
+	<body>
+	    <div class="container">
+	        <button class="btn btn-primary" id="log-btn">login</button>
+	    </div>
+		
+	    <script>    
+	        //connected app
+	        var client_id = '3MVG9szVa2RxsqBZc.YlAvhZSXOXdGUdgKKBbS4gNJw5QZJ85Yz61anXly7545NrbXidZZF14Pdmm8HZZ1mnf';
+	        var redirect_uri = 'https://msna35-developer-edition.na35.force.com/lbltran/js_callout_example';//from connected app
+	        var client_secret = '4398568616548629030';
+	        var grant_type = 'authorization_code';
+        
+	        $(function() {
+	            var code = getUrlParameter('code');
+	            if(code != null && code != '') {
+	                var url = 'https://login.salesforce.com';
+	                url += '/services/oauth2/token/';
+	                url += '?grant_type=authorization_code&client_secret=' + client_secret + '&client_id=' + client_id + '&redirect_uri=' + redirect_uri + '&code=' + code + '&prompt=login';
+                
+                
+	                $.ajax({
+	                    url: url,
+	                    type: 'POST',
+	                    dataType: "json",
+	                    contentType: "application/json",
+	                    success: function (data) {
+	                        console.log('data**' + JSON.stringify(data));
+	                    }
+	                });
+                
+	                // Assign handlers immediately after making the request, and remember the jqxhr object for this request
+	                /*var jqxhr = $.post( url, function(data) {
+	                  console.log( "success" + JSON.stringify(data) );
+	                })
+	                  .done(function(data) {
+	                    console.log( "second success" + JSON.stringify(data) );
+	                  })
+	                  .fail(function(data) {
+	                    console.log( "error" + JSON.stringify(data));
+	                  })
+	                  .always(function(data) {
+	                    console.log( "finished" + JSON.stringify(data) );
+	                  });
+                 
+	                // Set another completion function for the request above
+	                jqxhr.always(function(data) {
+	                  console.log( "second finished" + JSON.stringify(data) );
+	                });*/
+	            }
+	        });
+        
+	        $('#log-btn').click(function() {
+	            var url = 'https://login.salesforce.com';
+	            url += '/services/oauth2/authorize?';
+	            url += 'response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri + '&scope=full';
+	            window.top.location = url;
+	        });
+        
+	        //get url parameters value by name
+	        function getUrlParameter(name) {
+	            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+	            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+	            var results = regex.exec(location.search);
+	            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+	        };
+    
+	    </script>			
+	<body>        
+    
+</html>
